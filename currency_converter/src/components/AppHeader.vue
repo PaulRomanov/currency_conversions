@@ -8,7 +8,11 @@
         <router-link to="/" class="header__link" active-class="router-link-active">Главная</router-link>
         <router-link to="/convert" class="header__link" active-class="router-link-active">Конвертация</router-link>
       </nav>
-      <select class="header__currency-select">
+      <select
+        class="header__currency-select"
+        v-model="currentCurrency"
+        @change="updateBaseCurrency"
+      >
         <option value="RUB">RUB</option>
         <option value="USD">USD</option>
         <option value="EUR">EUR</option>
@@ -19,15 +23,25 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useCurrencyStore } from '@/stores/currency';
+import { onMounted, watch } from 'vue';
 
-const currentCurrency = ref('RUB');
+const currencyStore = useCurrencyStore();
+const currentCurrency = ref(currencyStore.baseCurrency);
 
-// TODO: Добавить логику для обновления основной валюты приложения
 const updateBaseCurrency = (event: Event) => {
   const target = event.target as HTMLSelectElement;
+  currencyStore.setBaseCurrency(target.value);
   currentCurrency.value = target.value;
-  console.log('Выбрана валюта:', currentCurrency.value);
 };
+
+watch(() => currencyStore.baseCurrency, (newBaseCurrency) => {
+  currentCurrency.value = newBaseCurrency;
+});
+
+onMounted(() => {
+  currencyStore.fetchRates();
+});
 </script>
 
 <style lang="scss" scoped>
