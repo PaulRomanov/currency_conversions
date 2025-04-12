@@ -76,6 +76,8 @@ if (!currencyStore.rates) {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/styles/_variables.scss';
+
 .currency-converter {
   padding: 20px;
 
@@ -91,13 +93,13 @@ if (!currencyStore.rates) {
     select {
       padding: 8px;
       margin-right: 10px;
-      border: 1px solid #ccc;
+      border: 1px solid $color-font-secondary;
       border-radius: 4px;
     }
 
     input[type="number"] {
       padding: 8px;
-      border: 1px solid #ccc;
+      border: 1px solid $color-font-secondary;
       border-radius: 4px;
     }
   }
