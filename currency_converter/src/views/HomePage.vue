@@ -37,7 +37,6 @@ const formatRate = (rate: number) => {
 };
 
 onMounted(() => {
-  console.log('HomePage смонтирован, вызываю fetchRates');
   currencyStore.fetchRates();
 });
 </script>

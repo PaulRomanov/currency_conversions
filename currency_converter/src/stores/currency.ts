@@ -31,7 +31,6 @@ export const useCurrencyStore = defineStore('currency', () => {
         }
         newRates[from][to] = data[key];
       }
-      console.log('Обработанные курсы:', newRates);
       rates.value = newRates;
     } catch (err: any) {
       error.value = err.message;
