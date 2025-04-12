@@ -48,16 +48,26 @@ const convertToFromValue = () => {
   }
 };
 
-watch(fromCurrency, () => {
-  if (fromValue.value !== null) {
-    convertToToValue();
+watch(fromCurrency, (newFromCurrency) => {
+  if (newFromCurrency === toCurrency.value) {
+    const currencies = ['RUB', 'USD', 'EUR'];
+    const currentIndex = currencies.indexOf(toCurrency.value);
+    const nextIndex = (currentIndex + 1) % currencies.length;
+    toCurrency.value = currencies[nextIndex];
   }
+  fromValue.value = null;
+  toValue.value = null;
 });
 
-watch(toCurrency, () => {
-  if (toValue.value !== null) {
-    convertToFromValue();
+watch(toCurrency, (newToCurrency) => {
+  if (newToCurrency === fromCurrency.value) {
+    const currencies = ['RUB', 'USD', 'EUR'];
+    const currentIndex = currencies.indexOf(fromCurrency.value);
+    const nextIndex = (currentIndex + 1) % currencies.length;
+    fromCurrency.value = currencies[nextIndex];
   }
+  toValue.value = null;
+  fromValue.value = null;
 });
 
 if (!currencyStore.rates) {
